@@ -8,6 +8,7 @@ place your log files inside /logs folder
 
 
 npm install
+
 npm run start
 
 (processed may take a few seconds)
