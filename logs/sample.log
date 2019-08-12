@@ -1,0 +1,4 @@
+2019-07-14T13:09:58.427Z - info: [logType:'INFO'][statusCode:'200'][method:'GET'][message:'Response'][userId:'undefined'][requestId:'undefined'] track this
+and this
+2019-07-14T13:09:58.427Z - info: [logType:'ERROR'][statusCode:'500'][method:'GET'][message:'Response'][userId:'undefined'][requestId:'undefined'] wow error
+
