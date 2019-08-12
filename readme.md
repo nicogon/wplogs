@@ -11,7 +11,7 @@ npm install
 
 npm run start
 
-(processed may take a few seconds)
+(processing logs may take a few seconds)
 
 ##### important! 
 logs are kept in memory, keep your log file size as minimum as possible
