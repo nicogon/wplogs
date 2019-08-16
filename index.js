@@ -1,8 +1,12 @@
-// Sorry for this shitty code 
+// Sorry for this shitty code  
 
 const fs = require('fs');
 const express = require('express');
 const chrono = require('chrono-node');
+
+const Entities = require('html-entities').XmlEntities;
+const entities = new Entities();
+
 
 let finished = false;
 let logs = [];
@@ -72,20 +76,35 @@ app.get('/(*)', function(req, res) {
 
   let filteredLogs;
 
+
+  filteredLogs = logs;
   if (query) {
-    filteredLogs = logs.filter((log) =>
-      log.message.toLowerCase().includes(query.toLowerCase())
+    const queries = query.split(" AND ");
+    for(singleQ of queries){
+      filteredLogs = filteredLogs.filter((log) =>
+      log.message.toLowerCase().includes(singleQ.toLowerCase())
     );
-  } else {
-    filteredLogs = logs;
+    }
+
   }
 
   const pages = Math.ceil(filteredLogs.length / 50);
   filteredLogs = filteredLogs.slice(page * 50, (page + 1) * 50);
-  filteredLogs = filteredLogs.map((log) => ({
-    ...log,
-    message: log.message.replaces(query, `<b class='red'>${query}</b>`)
-  }));
+  
+
+  if (query) {
+    const queries = query.split(" AND ");
+    for(singleQ of queries){
+      filteredLogs = filteredLogs.map((log) => ({
+        ...log,
+        message: log.message.replaces(singleQ, `<b class='red'>${singleQ}</b>`)
+      }));
+    }
+
+  }
+
+
+
 
   let pagesArray = Array.from(Array(pages).keys());
 
@@ -98,7 +117,7 @@ app.get('/(*)', function(req, res) {
   res.render('index', {
     finished,
     logs: filteredLogs,
-    query,
+    query:entities.encode(query),
     page,
     pages,
     pagesArray
